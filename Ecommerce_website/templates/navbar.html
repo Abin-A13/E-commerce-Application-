@@ -1,0 +1,29 @@
+{% load static %}
+<div class="Menuitem">
+    <div class="logo">
+        <a  href="{% url 'ecommerce_app:allProdCat' %}" ><img src="{% static 'img/Untitled-1.jpg' %}" alt="logo" width="150px" ></a>
+    </div>
+<nav id="Menuitem">
+    <ul >
+        <li><a href="{% url 'ecommerce_app:allProdCat' %}">Home</a></li>
+        <li class="{% if 'ecommerce_app' in request.path %}active{% endif %}" id="all_p">All Products
+            <ul>
+                {% for cate in links %}
+                <li><a href="{{cate.get_urls}}">{{cate.name}}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <div class="main">
+        <form  action="{% url 'Search_app:search_all' %}" method="get">
+            {% csrf_token %}
+            <input  type="text" name="q" placeholder="type to search">
+            <button class="ser_btn" type="submit"><i class="fa fa-search "></i></button>
+        </form>
+        </div>
+    </ul>
+</nav>
+{% if item_count > 0 %}
+    <a href="{% url 'cart:cart_details' %}"><img src="{% static 'img/cart.png' %}" width="30px" height="30px"><sup>({{item_count}})</sup></a>
+{% endif %}
+</div>
+

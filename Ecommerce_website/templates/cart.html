@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+ your shopping cart for make your product own by us
+{% endblock %}
+{% block title %}
+  Cart - BBC Store
+{% endblock %}
+{% block content %}
+{% if not cart_items%}
+<div class="C_row">
+  <h1 class="c_title">
+    YOur CArt is Empty!
+  </h1>
+  <div class="add_items">
+  <h2>Add items to cart</h2>
+  <button class="c_button" style="margin:center"><a href="{% url 'ecommerce_app:allProdCat' %}">Shop Now</a></button>
+  </div>
+</div>
+
+{% else %}
+<div class="c_row">
+  <h1 class="c_title"> Your Cart</h1>
+  <br>
+</div>
+<div class="small-container cart-page">
+  <table class="c_table">
+      <tr>
+          <th>
+            Your items
+          </th>
+          <th>Subtotal</th>
+      </tr>
+      {% for cat_it in cart_items %}
+      <tr>
+        <td>
+          <div class="cart_info">
+          <a href="cat_it.product.get_absolute_url"><img src="{{cat_it.product.image.url}}" alt="" class="cart_img"></a>
+           <div>
+              <p>{{cat_it.product.name}}</p>
+              <h3>SKU: {{cat_it.product.id}}</h3>
+              <h3>QTY : {{cat_it.quantity}} x ${{cat_it.price}}</h3> 
+              <small> Price: ${{cat_it.product.price}}</small><br>
+
+        {% if cat_it.quantity < cat_it.product.stock %}
+               <div class="action_buttons">
+                <a href="{% url 'cart:add_cart' cat_it.product.id %}"><i class="fa fa-plus custom_icon"></i></a>
+                &nbsp;<a href="{% url 'cart:minus' cat_it.product.id %}"><i class="fa fa-minus custom_icon"></i></a>
+                &nbsp;<a href="{% url 'cart:delete' cat_it.product.id %}" class="custom_icon"><i class="fa fa-trash custom_icon"></i></a>
+               </div>
+
+                <td class="c_total">${{cat_it.sub_total}}</td>
+        {% else %}
+                <div class="action_button2">
+                  &nbsp;<a href="{% url 'cart:minus' cat_it.product.id %}"><i class="fa fa-minus custom_icon"></i></a>
+                  &nbsp;<a href="{% url 'cart:delete' cat_it.product.id %}" ><i class="fa fa-trash custom_icon"></i></a>
+                </div>
+                <td class="c_total">${{cat_it.sub_total}}</td>
+           </div>
+             </td>
+            </tr>
+             </table>
+        {% endif %}
+      {% endfor %}
+    <table class="c_table">
+      <thead>
+        <tr>
+          <th>
+            Checkout 
+          </th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr>
+          <td class="next">
+            Please review your shopping cart items before proceeding with the order payment.
+          </td>
+        </tr>
+        <tr>
+            <td>
+                Total amount to pay = <strong>{{ total }}</strong>  <button style="width:60px">PayNow</button>
+            </td>
+        </tr>
+      <tr>
+          <td>
+              <div style="float:right">
+          <button class="c_btn"><a  style="color:white" href="{% url 'ecommerce_app:allProdCat' %}" >Continue Shopping</a></button>
+  </div>
+          </td>
+      </tr>
+      </tbody>
+    </table>
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block metadescription %}{% endblock %}">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div>
+    <div class="container">
+        {% include 'navbar.html'%}
+    {% block content %}
+    {% endblock %}
+</div>
+</div>
+
+<div class="payments">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-3">
+                <img src="{% static 'img/logo-paypal.png' %}" alt="payapal">
+            </div>
+            <div class="col-3">
+                <img src="{% static 'img/Gpay.png' %}" alt="Gpay">
+            </div>
+            <div class="col-3">
+                <img src="{% static 'img/paytm.png' %}" alt="Gpay">
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<footer>
+    {% include 'footer.html' %}
+</footer>
+</body>
+</html>

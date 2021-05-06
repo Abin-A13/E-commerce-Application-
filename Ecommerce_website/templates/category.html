@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+  {% if category %}
+    {{ category.descriptions|truncatewords:155 }}
+  {% else %}
+    Welcome to BBC store, buy our Premiere things.........
+  {% endif %}
+{% endblock %}
+{% block title %}
+   {% if category %}
+    {{ category.name }} - BBC STORE
+   {% else %}
+    Check out our product section.......
+   {% endif %}
+{% endblock %}
+{% block content %}
+<div class="container1">
+    <div >
+    {% if category %}
+    <p><a href="{% url 'ecommerce_app:allProdCat' %}">Our products</a></p>
+</div>
+{% endif %}
+{% if category %}
+<div class="catimg">
+    <img src="{{category.image.url}}" alt="{{category.name}}" >
+</div>
+<br>
+<div class="Catergory">
+    <h1>{{category.name}}</h1>
+    <p>{{category.descriptions}}</p>
+</div>
+</div>
+    {% else %}  
+<div class="row">
+    <div class="col-2">
+        <h1>Pick the perfect Fruits and Vegetables  From <br>our store! </h1>
+        <p>We provide the best in the world market. Fruits and Vegetables from the <br> real farms and home based rooftop, so we can definitely say that it fresh and originals we serve to you</p>
+        </div>
+
+<div class="col-2">
+    <img src="{% static 'img/banner.png' %}" alt="Products" >
+</div>
+</div>
+   <br>
+
+   {% endif %}
+<div >
+    
+    <div class="small-container"> 
+        <h2 class="title">Featured Products</h2>
+        <div class="row">
+            {% for prods in products.object_list %}
+            <!-- <div class="small-container"> -->
+                <div class="col-4">
+                      <div class="card">
+                        <a href="{{prods.get_urls}}"><img src="{{prods.image.url}}" alt="{{prods.name}}" width="150px" height="150px"></a>
+                        <div class="card-body">
+                        <h4>{{prods.name}}</h4>
+                        <p>${{prods.price}}</p>
+                         </div>
+                        </div>
+                </div>
+                {% endfor %}  
+            </div>
+         <div style="margin:auto">
+             {% if products.paginator.num_pages > 1 %}
+             <hr>
+             <div class="page_int">
+              {% for pg in products.paginator.page_range %}
+                 <a class="c_btn" href="?page={{pg}}"><button class="{% if products.number == pg %} active {% endif %}">{{pg}}</button></a>
+                 {% endfor %}
+            </div>
+             {% endif %}
+    </div>
+         
+            
+            
+        </div>
+            
+    </div>  
+        
+</div>
+</div>
+{% endblock %}
